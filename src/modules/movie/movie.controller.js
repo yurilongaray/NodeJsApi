@@ -41,6 +41,23 @@ class MovieController {
             }))
             .catch(err => res.status(500).json({ message: err.message }));
     }
+
+    async update(req, res, next) {
+
+        const id = req.params.id;
+        
+        return movieService.update(id, req.body)
+            .then(movie => res.json({
+                message: `The movie #${id} has been updated`,
+                content: movie
+            }))
+            .catch(error => {
+                if (error.status) {
+                    res.status(error.status).json({ message: error.message })
+                }
+                res.status(500).json({ message: error.message })
+            });
+    }
 }
 
 module.exports = new MovieController();

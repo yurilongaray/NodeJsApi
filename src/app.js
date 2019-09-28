@@ -25,3 +25,5 @@ app.listen(port, async () => {
     
     console.log(`app listening on port ${port}`)
 });
+
+// https://medium.com/@etiennerouzeaud/how-create-an-api-restfull-in-express-node-js-without-database-b030c687e2ea

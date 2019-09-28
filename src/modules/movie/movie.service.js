@@ -1,6 +1,6 @@
 let movies = require('../../data/movielist.json');
-const fs = require('fs');
-const root = require('app-root-path');
+const findOneOrFail = require('../../helpers/find-one-or-fail.helper');
+const writeIntoJsonFile = require('../../helpers/write-into-json-file.helper');
 
 class MovieService {
 
@@ -22,20 +22,7 @@ class MovieService {
 
     getOne(id) {
 
-        return new Promise((resolve, reject) => {
-
-            const movieFound = movies.find(movie => movie.id === id);
-
-            if (!movieFound) {
-
-                reject({
-                    message: 'Movie Not Found',
-                    status: 404
-                });
-            }
-
-            resolve(movieFound);
-        });
+        return findOneOrFail(movies, id);
     }
 
     create(movie) {
@@ -46,15 +33,26 @@ class MovieService {
             const newMovie = { id, ...movie };
 
             movies.push(newMovie);
-            fs.writeFileSync(`${root.path}/src/data/movielist.json`, JSON.stringify(movies), 'utf8', (error) => {
-            
-                if (error) {
-                    
-                    reject(error)
-                }
-            });
+
+            writeIntoJsonFile(movies, reject);
 
             resolve(newMovie);
+        });
+    }
+
+    update(id, newMovie) {
+
+        return new Promise(async (resolve, reject) => {
+
+            const movieFound = await findOneOrFail(movies, id);
+
+            const index = movies.findIndex(movie => movie.id == movieFound.id);
+
+            movies[index] = { id: movieFound.id, ...newMovie };
+
+            writeIntoJsonFile(movies, reject);
+
+            resolve(movies[index]);
         });
     }
 }
