@@ -4,7 +4,7 @@ const movieController = require('./movie.controller');
 
 router.get('/', movieController.getAll);
 router.get('/:id', movieController.getOne);
-// router.post('/', movieController.post);
+router.post('/', movieController.create);
 // router.put('/:id', movieController.put);
 // router.delete('/:id', movieController.delete);
 

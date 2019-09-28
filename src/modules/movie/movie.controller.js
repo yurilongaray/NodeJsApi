@@ -1,11 +1,10 @@
-let movies = require('../../data/movielist.json');
 const movieService = require('./movie.service');
 
 class MovieController {
 
     async getAll(req, res, next) {
 
-        return movieService.getAll(movies)
+        return movieService.getAll()
             .then(movies => res.json(movies))
             .catch(error => {
 
@@ -32,6 +31,16 @@ class MovieController {
                 }
             });
     };
+
+    async create(req, res, next) {
+
+        return movieService.create(req.body)
+            .then(movie => res.status(201).json({
+                message: `The movie #${movie.id} has been created`,
+                content: movie
+            }))
+            .catch(err => res.status(500).json({ message: err.message }))
+    }
 }
 
 module.exports = new MovieController();
