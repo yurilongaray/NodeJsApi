@@ -2,7 +2,6 @@ const csvParse = require('../util/csv-parse');
 
 exports.get = async (req, res, next) => {
 
-    await csvParse();
     res.status(201).send('Requisição recebida com sucesso!');
 };
 

@@ -8,34 +8,18 @@ module.exports = function () {
 
 		try {
 
-			// const csvRows = [];
+			const result = [];
 
 			fs.createReadStream(`${root.path}/src/data/movielist.csv`)
 				.pipe(csv({
-					skip_lines_with_error: true,
-					separator: ';'
+					columns: true,
+					delimiter: ';',
+					skip_lines_with_error: true
 				}))
-				.on('data', (row) => {
-
-					// const newRow = {};
-
-					console.log(row);
-
-					// for (const key of Object.keys(row)) {
-
-					// 	newRow[key.replace(/^[ ]+|[ ]+$/g, '')] = row[key]
-					// 		? row[key].replace(/^[ ]+|[ ]+$/g, '').replace(/\uFFFD/g, '')
-					// 		: '';
-					// }
-
-					// csvRows.push(newRow);
-
-				})
+				.on('data', (row) => result.push(row))
 				.on('end', () => {
 
-					console.info('CSV file successfully processed');
-
-					resolve(csvRows);
+					resolve();
 				});
 		} catch (error) {
 
