@@ -2,7 +2,7 @@ const movieService = require('./movie.service');
 
 class MovieController {
 
-    async getAll(req, res, next) {
+    getAll(req, res) {
 
         return movieService.getAll()
             .then(movies => res.json(movies))
@@ -16,7 +16,7 @@ class MovieController {
             });
     };
 
-    async getOne(req, res, next) {
+    getOne(req, res) {
 
         const id = parseInt(req.params.id);
 
@@ -32,7 +32,7 @@ class MovieController {
             });
     };
 
-    async create(req, res, next) {
+    create(req, res) {
 
         return movieService.create(req.body)
             .then(movie => res.status(201).json({
@@ -42,10 +42,10 @@ class MovieController {
             .catch(err => res.status(500).json({ message: err.message }));
     }
 
-    async update(req, res, next) {
+    update(req, res) {
 
         const id = req.params.id;
-        
+
         return movieService.update(id, req.body)
             .then(movie => res.json({
                 message: `The movie #${id} has been updated`,
@@ -58,19 +58,22 @@ class MovieController {
                 res.status(500).json({ message: error.message })
             });
     }
+
+    delete(req, res) {
+
+        const id = req.params.id
+
+        return movieService.delete(id)
+            .then(() => res.json({
+                message: `The movie #${id} has been deleted`
+            }))
+            .catch(err => {
+                if (err.status) {
+                    res.status(err.status).json({ message: err.message })
+                }
+                res.status(500).json({ message: err.message })
+            })
+    }
 }
 
 module.exports = new MovieController();
-/* exports.post = (req, res, next) => {
-        res.status(201).send('Requisição recebida com sucesso!');
-    };
-
-    exports.put = (req, res, next) => {
-        let id = req.params.id;
-        res.status(201).send(`Requisição recebida com sucesso! ${id}`);
-    };
-
-    exports.delete = (req, res, next) => {
-        let id = req.params.id;
-        res.status(200).send(`Requisição recebida com sucesso! ${id}`);
-    }; */

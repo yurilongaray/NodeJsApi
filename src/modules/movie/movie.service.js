@@ -1,8 +1,12 @@
-let movies = require('../../data/movielist.json');
 const findOneOrFail = require('../../helpers/find-one-or-fail.helper');
+const root = require('app-root-path');
 const writeIntoJsonFile = require('../../helpers/write-into-json-file.helper');
 
+let movies = require('../../data/movielist.json');
+const filePath = `${root.path}/src/data/movielist.json`;
+
 class MovieService {
+
 
     getAll() {
 
@@ -34,7 +38,7 @@ class MovieService {
 
             movies.push(newMovie);
 
-            writeIntoJsonFile(movies, reject);
+            writeIntoJsonFile(filePath, movies, reject);
 
             resolve(newMovie);
         });
@@ -50,9 +54,22 @@ class MovieService {
 
             movies[index] = { id: movieFound.id, ...newMovie };
 
-            writeIntoJsonFile(movies, reject);
+            writeIntoJsonFile(filePath, movies, reject);
 
             resolve(movies[index]);
+        });
+    }
+
+    delete(id) {
+
+        return new Promise(async (resolve, reject) => {
+
+            const movieFound = await findOneOrFail(movies, id);
+            const newMovies = movies.filter(movie => movie.id !== movieFound.id);
+
+            writeIntoJsonFile(filePath, newMovies, reject);
+
+            resolve();
         });
     }
 }
