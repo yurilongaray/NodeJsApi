@@ -1,20 +1,20 @@
 const express = require('express');
-const normalizaPort = require('./util/normalize-port');
-const csvParse = require('../src/util/csv-parse');
+const normalizaPort = require('./helpers/normalize-port.helper');
+const csvParseToJsonFile = require('./helpers/csv-parse.helper');
 
 const app = express();
-const router = express.Router();
 const port = normalizaPort(process.env.PORT || '3000');
 
 //Rotas
 const index = require('./routes/index');
-const csv = require('./routes/csv');
+const movie = require('./modules/movie/movie.router');
 
 app.use('/', index);
-app.use('/csv', csv);
+app.use('/movies', movie);
 
 app.listen(port, async () => {
 
-    await csvParse();
+    await csvParseToJsonFile();
+    
     console.log(`app listening on port ${port}`)
 });

@@ -1,7 +1,8 @@
-const csvParse = require('../util/csv-parse');
+const movieService = require('./movie.service');
 
 exports.get = async (req, res, next) => {
 
+    movieService.getAll();
     res.status(201).send('Requisição recebida com sucesso!');
 };
 

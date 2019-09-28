@@ -2,7 +2,7 @@ const fs = require('fs');
 const csv = require('csv-parse');
 const root = require('app-root-path');
 
-module.exports = function () {
+module.exports = () => {
 
 	return new Promise((resolve, reject) => {
 
@@ -18,12 +18,14 @@ module.exports = function () {
 				}))
 				.on('data', (row) => result.push(row))
 				.on('end', () => {
-
+					
+					fs.writeFileSync(`${root.path}/src/data/movielist.json`, JSON.stringify(result));
+					
 					resolve();
 				});
 		} catch (error) {
 
-			reject(error);
+			return reject(error);
 		}
 	});
 }

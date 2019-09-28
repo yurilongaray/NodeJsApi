@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../modules/movie/movie.controller');
+const controller = require('./movie.controller');
 
 router.get('/', controller.get);
 router.post('/', controller.post);
