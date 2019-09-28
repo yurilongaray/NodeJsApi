@@ -14,7 +14,7 @@ class MovieController {
                     res.status(500).json({ message: error.message })
                 }
             });
-    };
+    }
 
     getOne(req, res) {
 
@@ -30,7 +30,7 @@ class MovieController {
                     res.status(500).json({ message: error.message })
                 }
             });
-    };
+    }
 
     create(req, res) {
 

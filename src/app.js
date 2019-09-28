@@ -10,6 +10,7 @@ const port = normalizaPort(process.env.PORT || '3000');
 //Rotas
 const index = require('./routes/index');
 const movie = require('./modules/movie/movie.router');
+const producer = require('./modules/producer/producer.router');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 
 app.use('/api/v1', index);
 app.use('/api/v1/movies', movie);
+app.use('/api/v1/producers', producer);
 
 app.listen(port, async () => {
 
