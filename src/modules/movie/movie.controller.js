@@ -20,7 +20,7 @@ class MovieController {
 
         const id = parseInt(req.params.id);
 
-        return movieService.getOne(movies, id)
+        return movieService.getOne(id)
             .then(movie => res.json(movie))
             .catch(error => {
 
@@ -39,7 +39,7 @@ class MovieController {
                 message: `The movie #${movie.id} has been created`,
                 content: movie
             }))
-            .catch(err => res.status(500).json({ message: err.message }))
+            .catch(err => res.status(500).json({ message: err.message }));
     }
 }
 

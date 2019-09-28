@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const movieController = require('./movie.controller');
+const middleware = require('../../middlewares/middlewares');
 
 router.get('/', movieController.getAll);
-router.get('/:id', movieController.getOne);
-router.post('/', movieController.create);
+router.get('/:id', middleware.mustBeInteger, movieController.getOne);
+router.post('/', middleware.checkFieldsPost, movieController.create);
 // router.put('/:id', movieController.put);
 // router.delete('/:id', movieController.delete);
 

@@ -1,18 +1,26 @@
 function mustBeInteger(req, res, next) {
-    const id = req.params.id
+
+    const id = req.params.id;
+
     if (!Number.isInteger(parseInt(id))) {
-        res.status(400).json({ message: 'ID must be an integer' })
+
+        res.status(400).json({ message: 'ID must be an integer' });
     } else {
-        next()
+
+        next();
     }
 }
 
 function checkFieldsPost(req, res, next) {
-    const { title, content, tags } = req.body
-    if (title && content && tags) {
-        next()
+
+    const { year, title, studios, producers, winner } = req.body;
+
+    if (year, title, studios, producers, winner) {
+
+        next();
     } else {
-        res.status(400).json({ message: 'fields are not good' })
+
+        res.status(400).json({ message: 'fields are not good' });
     }
 }
 
