@@ -8,7 +8,7 @@ module.exports = () => {
 
 		try {
 
-			const result = [];
+			const results = [];
 
 			fs.createReadStream(`${root.path}/src/data/movielist.csv`)
 				.pipe(csv({
@@ -16,11 +16,19 @@ module.exports = () => {
 					delimiter: ';',
 					skip_lines_with_error: true
 				}))
-				.on('data', (row) => result.push(row))
+				.on('data', (row) => results.push(row))
 				.on('end', () => {
-					
-					fs.writeFileSync(`${root.path}/src/data/movielist.json`, JSON.stringify(result));
-					
+
+					const resultsToJson = JSON.stringify(results.map((result, index) => {
+						
+						return {
+							id: index + 1,
+							...result
+						};
+					}));
+
+					fs.writeFileSync(`${root.path}/src/data/movielist.json`, resultsToJson);
+
 					resolve();
 				});
 		} catch (error) {
