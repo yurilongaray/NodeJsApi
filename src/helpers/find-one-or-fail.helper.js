@@ -1,17 +1,14 @@
-module.exports = (array, id) => {
+module.exports = (array, id, reject) => {
 
-    return new Promise((resolve, reject) => {
+    const registerFound = array.find(register => register.id == id);
 
-        const registerFound = array.find(register => register.id == id);
+    if (!registerFound) {
 
-        if (!registerFound) {
+        reject({
+            message: 'ID not found',
+            status: 404
+        });
+    }
 
-            reject({
-                message: 'ID is not good',
-                status: 404
-            });
-        }
-
-        resolve(registerFound);
-    })
+    return registerFound;
 }

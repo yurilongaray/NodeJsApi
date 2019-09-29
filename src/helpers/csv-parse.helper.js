@@ -1,7 +1,8 @@
 const fs = require('fs');
 const csv = require('csv-parse');
 const root = require('app-root-path');
-const createProducerList = require('./populate-producers');
+const writeIntoJsonFile = require('./write-into-json-file.helper');
+const createProducerList = require('./populate-producers.helper');
 
 module.exports = () => {
 
@@ -20,18 +21,17 @@ module.exports = () => {
 				.on('data', (row) => results.push(row))
 				.on('end', () => {
 
-					const resultsToJson = JSON.stringify(results.map((result, index) => {
+					const resultsToJson = results.map((result, index) => {
 
 						return {
 							id: index + 1,
 							...result
 						};
-					}));
-					
-					fs.writeFile(`${root.path}/src/data/movielist.json`, resultsToJson, () => {
-					
-						createProducerList();
 					});
+
+					writeIntoJsonFile(`${root.path}/src/data/movielist.json`, resultsToJson);
+
+					createProducerList();
 
 					resolve(results);
 				});

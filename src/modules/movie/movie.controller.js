@@ -1,4 +1,5 @@
 const movieService = require('./movie.service');
+const formatError = require('../../helpers/format-error.helper');
 
 class MovieController {
 
@@ -6,73 +7,43 @@ class MovieController {
 
         return movieService.getAll()
             .then(movies => res.json(movies))
-            .catch(error => {
-
-                if (error.status) {
-                    res.status(error.status).json({ message: error.message })
-                } else {
-                    res.status(500).json({ message: error.message })
-                }
-            });
+            .catch(error => formatError(error, res));
     }
 
     getOne(req, res) {
 
-        const id = parseInt(req.params.id);
-
-        return movieService.getOne(id)
+        return movieService.getOne(parseInt(req.params.id))
             .then(movie => res.json(movie))
-            .catch(error => {
-
-                if (error.status) {
-                    res.status(error.status).json({ message: error.message })
-                } else {
-                    res.status(500).json({ message: error.message })
-                }
-            });
+            .catch(error => formatError(error, res));
     }
 
     create(req, res) {
 
         return movieService.create(req.body)
             .then(movie => res.status(201).json({
-                message: `The movie #${movie.id} has been created`,
+                message: `Movie #${movie.id} has been created`,
                 content: movie
             }))
-            .catch(err => res.status(500).json({ message: err.message }));
+            .catch(error => formatError(error, res));
     }
 
     update(req, res) {
 
-        const id = req.params.id;
-
-        return movieService.update(id, req.body)
+        return movieService.update(req.params.id, req.body)
             .then(movie => res.json({
-                message: `The movie #${id} has been updated`,
+                message: `Movie #${req.params.id} has been updated`,
                 content: movie
             }))
-            .catch(error => {
-                if (error.status) {
-                    res.status(error.status).json({ message: error.message })
-                }
-                res.status(500).json({ message: error.message })
-            });
+            .catch(error => formatError(error, res));
     }
 
     delete(req, res) {
 
-        const id = req.params.id
-
-        return movieService.delete(id)
+        return movieService.delete(req.params.id)
             .then(() => res.json({
-                message: `The movie #${id} has been deleted`
+                message: `Movie #${req.params.id} has been deleted`
             }))
-            .catch(err => {
-                if (err.status) {
-                    res.status(err.status).json({ message: err.message })
-                }
-                res.status(500).json({ message: err.message })
-            })
+            .catch(error => formatError(error, res));
     }
 }
 

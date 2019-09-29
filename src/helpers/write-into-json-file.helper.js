@@ -3,11 +3,11 @@ const fs = require('fs');
 
 module.exports = (fileName, content, reject) => {
 
-    fs.writeFileSync(fileName, JSON.stringify(content), 'utf8', (err) => {
+    fs.writeFileSync(fileName, JSON.stringify(content), 'utf8', (error) => {
     
-        if (err) {
+        if (error) {
             
-            reject();
+            return rejece? reject() : error;
         }
     });
 };

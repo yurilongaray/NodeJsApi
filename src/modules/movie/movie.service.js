@@ -25,8 +25,13 @@ class MovieService {
     }
 
     getOne(id) {
-
-        return findOneOrFail(movies, id);
+    
+        return new Promise(async (resolve, reject) => {
+            
+            const movieFound = findOneOrFail(movies, id, reject);
+            
+            resolve(movieFound);
+        });
     }
 
     create(movie) {
@@ -46,10 +51,9 @@ class MovieService {
 
     update(id, newMovie) {
 
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
-            const movieFound = await findOneOrFail(movies, id);
-
+            const movieFound = findOneOrFail(movies, id, reject);
             const index = movies.findIndex(movie => movie.id == movieFound.id);
 
             movies[index] = { id: movieFound.id, ...newMovie };
@@ -62,9 +66,9 @@ class MovieService {
 
     delete(id) {
 
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
-            const movieFound = await findOneOrFail(movies, id);
+            const movieFound = findOneOrFail(movies, id, reject);
             const newMovies = movies.filter(movie => movie.id !== movieFound.id);
 
             writeIntoJsonFile(filePath, newMovies, reject);
