@@ -1,4 +1,3 @@
-const expect = require('chai').expect;
 const server = require('../app');
 const request = require('supertest')(server);
 

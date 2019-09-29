@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js --ignore '/src/data/'",
-    "test": "mocha --timeout 30000 ./test/**/*.js --exit" 
+    "start": "nodemon ./server/server.js --ignore '/src/data/'",
+    "test": "jest --runInBand"
   },
   "author": "",
   "license": "ISC",
@@ -18,8 +18,11 @@
     "nodemon": "^1.19.2"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^24.9.0",
     "mocha": "^6.2.1",
+    "superagent": "^5.1.0",
     "supertest": "^4.0.2"
   }
 }
