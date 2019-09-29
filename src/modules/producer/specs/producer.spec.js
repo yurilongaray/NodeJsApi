@@ -1,7 +1,7 @@
-const server = require('../app');
+const server = require('../../../../app');
 const request = require('supertest')(server);
 
-describe('Producers API tests', () => {
+describe('Producer API tests', () => {
 
     it('should return the faster and the lowest winner', async () => {
 
@@ -11,6 +11,9 @@ describe('Producers API tests', () => {
             .expect(200)
             .then();
 
-        // expect(body).eq();
+        expect(body).toEqual(expect.objectContaining({
+            max: expect.any(Array),
+            min: expect.any(Array)
+        }));
     });
 });
