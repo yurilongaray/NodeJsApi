@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const server = require('../src/app');
+const server = require('../app');
 const request = require('supertest')(server);
 
 describe('Producers API tests', () => {

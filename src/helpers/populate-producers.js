@@ -1,4 +1,3 @@
-const fs = require('fs');
 const root = require('app-root-path');
 const writeIntoJsonFile = require('./write-into-json-file.helper');
 const movies = require('../data/movielist.json');
@@ -7,7 +6,7 @@ const producerListPath = `${root.path}/src/data/producerlist.json`;
 
 module.exports = () => {
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
         try {
 
@@ -52,14 +51,14 @@ module.exports = () => {
                 }
             }
 
-            writeIntoJsonFile(producerListPath, producerList);
+            await writeIntoJsonFile(producerListPath, producerList);
 
             resolve();
         } catch (error) {
 
             console.log(error);
 
-            reject(error)
+            reject(error);
         }
     });
 }

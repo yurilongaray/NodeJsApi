@@ -1,6 +1,7 @@
 const fs = require('fs');
 const csv = require('csv-parse');
 const root = require('app-root-path');
+const createProducerList = require('./populate-producers');
 
 module.exports = () => {
 
@@ -20,16 +21,19 @@ module.exports = () => {
 				.on('end', () => {
 
 					const resultsToJson = JSON.stringify(results.map((result, index) => {
-						
+
 						return {
 							id: index + 1,
 							...result
 						};
 					}));
+					
+					fs.writeFile(`${root.path}/src/data/movielist.json`, resultsToJson, () => {
+					
+						createProducerList();
+					});
 
-					fs.writeFileSync(`${root.path}/src/data/movielist.json`, resultsToJson);
-
-					resolve();
+					resolve(results);
 				});
 		} catch (error) {
 
