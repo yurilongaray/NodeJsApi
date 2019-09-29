@@ -1,4 +1,5 @@
 const producerService = require('./producer.service');
+const formatError = require('../../helpers/format-error.helper');
 
 class ProducerController {
 
@@ -29,14 +30,7 @@ class ProducerController {
                     ]
                 })
             })
-            .catch(error => {
-
-                if (error.status) {
-                    res.status(error.status).json({ message: error.message })
-                } else {
-                    res.status(500).json({ message: error.message })
-                }
-            });
+            .catch(error => formatError(error, res));
     }
 }
 
