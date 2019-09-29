@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const movieController = require('./movie.controller');
-const middleware = require('../../middlewares/middlewares');
+const mustBeInteger = require('../../middlewares/must-be-integer');
+const checkFieldsPost = require('../../middlewares/check-fields');
 
 router.get('/', movieController.getAll);
-router.get('/:id', middleware.mustBeInteger, movieController.getOne);
-router.post('/', middleware.checkFieldsPost, movieController.create);
-router.put('/:id', middleware.mustBeInteger, movieController.update);
-router.delete('/:id', middleware.mustBeInteger, movieController.delete);
+router.get('/:id', mustBeInteger, movieController.getOne);
+router.post('/', checkFieldsPost, movieController.create);
+router.put('/:id', mustBeInteger, movieController.update);
+router.delete('/:id', mustBeInteger, movieController.delete);
 
 module.exports = router;
