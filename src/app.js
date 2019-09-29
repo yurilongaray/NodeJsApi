@@ -25,10 +25,12 @@ app.use('/api/v1/producers', producer);
 app.listen(port, async () => {
 
     await csvParseToJsonFile();
-    
+
     await createProducerList();
-    
+
     console.log(`app listening on port ${port}`)
 });
+
+module.exports = app;
 
 // https://medium.com/@etiennerouzeaud/how-create-an-api-restfull-in-express-node-js-without-database-b030c687e2ea
