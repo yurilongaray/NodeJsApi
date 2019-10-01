@@ -27,7 +27,7 @@ module.exports = () => {
                             if (movie.winner === 'yes') {
 
                                 producerList[index].winYears.push(parseInt(movie.year));
-                                producerList[index].winYears = [...new Set(producerList[index].winYears)];
+                                producerList[index].winYears = [...new Set(producerList[index].winYears)].sort();
                             }
 
                             if (producerList[index].winYears.length > 1) {
